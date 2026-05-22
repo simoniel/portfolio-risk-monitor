@@ -1,0 +1,53 @@
+portfolio:
+  tickers:
+    - SPY      # US large cap (S&P 500)
+    - QQQ      # US tech / Nasdaq
+    - IWM      # US small caps
+    - EFA      # International developed markets
+    - EEM      # Emerging markets
+    - TLT      # Long-duration US Treasuries
+    - GLD      # Gold
+    - VNQ      # Real estate (REITs)
+    - USO      # Oil
+    - BTC-USD  # Bitcoin
+
+  start_date: "2019-01-01"
+  end_date:   "2024-12-31"
+
+  # Chronological train/test split — never random
+  train_end:  "2022-12-31"
+  test_start: "2023-01-01"
+
+data:
+  raw_dir:       data/raw
+  processed_dir: data/processed
+  external_dir:  data/external
+
+features:
+  returns_window: 1          # daily returns (pct_change lag)
+  vol_window:     21         # rolling volatility window (trading days ~ 1 month)
+  corr_window:    63         # rolling correlation window (trading days ~ 1 quarter)
+  drawdown: true
+
+model:
+  n_regimes: 3               # number of clusters for regime detection (calm/turbulent/crisis)
+  random_state: 42
+  anomaly_contamination: 0.05  # isolation forest: expected fraction of anomalous days
+
+rag:
+  chunk_size: 512
+  top_k: 5                   # number of news chunks to retrieve per query
+  embedding_model: "all-MiniLM-L6-v2"  # sentence-transformers model
+  vector_store: "chromadb"
+
+llm:
+  provider: "anthropic"      # or "ollama" for local
+  model: "claude-sonnet-4-6"
+  ollama_model: "mistral"    # used if provider is ollama
+  max_tokens: 1000
+  temperature: 0.2           # low temp for factual financial summaries
+
+outputs:
+  plots_dir:   outputs/plots
+  reports_dir: outputs/reports
+  models_dir:  outputs/models

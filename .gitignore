@@ -1,0 +1,40 @@
+# Environment and secrets
+.env
+*.env
+
+# Raw data — re-downloadable via 01_ingest.py
+data/raw/
+data/external/
+
+# Generated outputs — reproducible from scripts
+outputs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter (if you use notebooks for exploration)
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Logs
+*.log
